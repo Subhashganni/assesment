@@ -1,0 +1,273 @@
+1. hello world
+pragma solidity ^0.8.10;
+
+contract FirstContract {
+    string public greet= "hello sakha Global";
+    
+}
+
+
+2.factorial
+
+
+pragma solidity ^0.8.7;
+
+contract Test {
+    uint x;
+    function set(uint y) public {
+        x = y;
+    }
+
+    function factorial(uint y) internal pure returns(uint){
+        if (y == 1){
+            return y;
+        } else {
+            return y * factorial(y-1);
+        }
+    }
+
+    function get() public view returns(uint){
+        return factorial(x);
+    }
+}
+
+3. Voting System . have some doughts in it 
+
+pragma solidity ^0.8.7;
+
+contract Election {
+
+//Initia;;y Struct of candidate will be created 
+struct Candidate{
+    uint id;
+    string candidateName;
+    uint voteCount;
+}
+
+mapping (address=>bool) public voters;
+
+//0 , 1 =
+mapping (uint=> Candidate)public candidates; //map called candidate is created which can hold unit type
+
+uint public candidatesCount;
+
+function addCandidate(string memory _name) private {
+    candidatesCount++;
+    candidates[candidatesCount]=Candidate(candidatesCount,_name,0);
+}
+
+constructor() {
+    addCandidate("Donald Trump");
+    addCandidate("Joe Baiden");
+    addCandidate("Abdul Kalam");
+}
+
+event consolePrint( string, address);
+function vote(uint _candidateId) public{
+    require(voters[msg.sender]); //msg.sender => person who has initiated smart contract
+    require(_candidateId>0 && _candidateId<=candidatesCount); //correct set of candidates
+
+
+    emit consolePrint("value of sender is ",msg.sender);
+    voters[msg.sender]=true;
+    candidates[_candidateId].voteCount++;
+
+
+}
+
+}
+
+
+4.palindrome
+
+pragma solidity ^0.8.7;
+
+contract Palindrome{
+
+    string name;
+
+    function Reverse(string calldata _name) external pure returns (string memory,bool){
+
+        bytes memory _baseBytes = bytes(_name);
+
+        //check if the string length is not zero, if it's zero then execution terminates
+        assert(_baseBytes.length > 0);
+
+        string memory _tempValue = new string(_baseBytes.length);
+
+        bytes memory _newValue = bytes(_tempValue);
+
+        for(uint i = 0; i < _baseBytes.length; i++){
+
+            _newValue[_baseBytes.length - i -1] = _baseBytes[i];
+
+        }
+        
+        if( keccak256(abi.encodePacked(_name)) == keccak256(abi.encodePacked(_newValue)) ){
+
+            return (string(_newValue),true);
+
+        }
+        else{
+
+            return (string(_newValue),false);
+
+        }
+
+    }
+    
+}
+
+Need to add to transfer 50 ethers to owner account
+
+5.time stamp
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.7;
+
+contract Time{
+
+    function getTime(uint Sec) public view returns (uint){
+
+        //Check entered timestamp with current time
+        if(Sec>block.timestamp)
+        {
+
+            return Sec+4830;
+
+        }
+        else
+        {
+
+            return 0;
+
+        }
+    }
+
+}
+
+6.Three and seven
+
+
+pragma solidity ^0.8.7;
+
+contract ThreeAndSeven{
+  
+    function Check(uint num) public pure returns (bool) {
+        if((num % 3 == 0 || num % 7 ==0) && num>10){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+}
+
+7.EvenOdd
+
+pragma solidity ^0.8.7;
+
+contract Test
+{
+    
+    int num;
+    string num_type;
+    
+    
+    function set(int n) public
+    {
+       if(n%2==0)
+       {
+           num_type='even';
+       }
+       else
+       {
+           num_type='odd';
+       }
+        
+    }
+    
+    function get() public view returns(string memory)
+    {
+        return num_type;
+    }
+
+}
+
+8.Calculator
+
+pragma solidity ^0.8.7;
+
+contract Calculator {
+    uint c;
+
+    function add(uint a, uint b) public {
+        c = a + b;
+    }
+
+    function sub(uint a, uint b) public {
+        c = a - b;
+    }
+
+    function mul(uint a, uint b) public {
+        c = a * b;
+    }
+
+    function div(uint a, uint b) public {
+
+        c = a / b;
+    }
+
+    function getResult() public view returns (uint x) {
+        return c;
+    }
+}
+
+9. Sum of digit
+
+pragma solidity 0.8.17;
+contract sum
+{
+    uint a ;
+    uint b ;
+    function aSet(uint x) public
+    {
+        a = x;
+    }
+ 
+    function bSet(uint y) public
+    {
+        b = y;
+    }
+ 
+    function add() view public returns (uint)
+    {
+        uint Sum = a + b ;
+         
+        return Sum;
+    }
+}
+
+10. Attendence Register
+
+pragma solidity ^0.8.7;
+
+contract AttedenceRegister{
+    
+    uint date;
+    uint256 rollnum;
+
+    struct Student{
+        uint256 rollno;
+        string name;
+        uint8 class;
+        uint datenow;
+    }
+
+    mapping ( uint256 => Student) public StudentData;
+
+    function addStudent(uint256 _rollnum, string memory _name, uint8 _class) public {
+        date = block.timestamp;
+        StudentData[_rollnum] = Student(_rollnum, _name, _class, date);
+    }
+}
