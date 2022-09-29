@@ -74,7 +74,7 @@ contract Election2022 {
     function setStop(uint256 num) external ecOnly {
         require(num > block.timestamp && num > startTime,"Stop at later time" );
         stopTime = num;
-        assert(startTime >= stopTime);
+       
     }
 
     event consolePrint( string, address);
@@ -99,7 +99,7 @@ contract Election2022 {
             if ( candidates[i].voteCount > max ) {
                 max = candidates[i].voteCount;
                 c = i;
-                assert(c >= max);
+ 
             }
         }
 
