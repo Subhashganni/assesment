@@ -1,0 +1,58 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.13;
+
+contract StepUpToken {
+
+    address owner;
+
+    uint totalNumofToken;
+
+    string name = "StepUpToken";
+
+    string symbol = "SU";
+
+    address payable DeadAddress = payable(0x0000000000000000000000000000000000000000);
+    
+    mapping(address=>uint) balances;
+
+
+    constructor(uint _total) {
+        totalNumofToken = _total;
+        balances[msg.sender] = _total;
+        owner = msg.sender;
+    }
+
+
+    function getBalance(address someone) public view returns (uint) {
+        return balances[someone];
+    }
+
+
+    function transfer(address receiver, uint tokens) public {
+
+        require(balances[msg.sender] >= tokens,"Not enough tokens");
+
+        balances[owner] = balances[owner] - tokens;
+
+        balances[receiver] = balances[receiver] + tokens;
+
+    }
+function Burn(uint tokens) public {
+
+        require(balances[owner] >= tokens,"Not enough tokens");
+
+        balances[owner] = balances[owner] - tokens;
+
+        // balances[DeadAddress] = balances[DeadAddress] + tokens;
+        
+        // balances[DeadAddress] -= balances[DeadAddress];
+
+    }
+function updateBal(uint tokens) public {
+       
+       balances[msg.sender]=balances[msg.sender]+tokens;
+
+    }
+
+
+}
